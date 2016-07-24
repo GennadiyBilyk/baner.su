@@ -12,10 +12,11 @@ namespace App\Model;
 abstract class Base
 {
     private static $dbh = NULL;
+
     public function __construct()
     {
 
-        if( ! self::$dbh) {
+        if (!self::$dbh) {
             /* Connect to an ODBC database using driver invocation */
             $dsn = 'mysql:dbname=baner;host=127.0.0.1';
             $user = 'root';
@@ -27,18 +28,24 @@ abstract class Base
     }
 
 
-    public function commitTransaction(){
+    public function commitTransaction()
+    {
         //@todo
     }
-    public function rollbackTransaction(){
+
+    public function rollbackTransaction()
+    {
         //@todo
     }
-    public function startTransaction(){
-       //@todo
+
+    public function startTransaction()
+    {
+        //@todo
     }
 
 
-    public function select($sql,array $params = []){
+    public function select($sql, array $params = [])
+    {
 
         $sth = self::$dbh->prepare($sql);
         $sth->execute($params);
@@ -47,7 +54,8 @@ abstract class Base
 
     }
 
-    public function selectOne($sql,array $params = []){
+    public function selectOne($sql, array $params = [])
+    {
 
         $sth = self::$dbh->prepare($sql);
 
@@ -55,26 +63,26 @@ abstract class Base
         return $sth->fetch();
     }
 
-    public function insert($table_name,array $values){
+    public function insert($table_name, array $values)
+    {
 
         $sql = 'INSERT INTO ' . $table_name . ' (';
-        foreach(array_keys($values) as $val){
+        foreach (array_keys($values) as $val) {
             $sql .= $val . ', ';
         }
-        $sql = trim($sql,', ');
+        $sql = trim($sql, ', ');
         $sql .= ') VALUES (';
         $params = [];
-        foreach($values as $key=>$val){
+        foreach ($values as $key => $val) {
 
             $sql .= ":" . $key . ', ';
             $params[":" . $key] = $val;
-         }
+        }
 
-        $sql = trim($sql,', ');
+        $sql = trim($sql, ', ');
         $sql .= ');';
 
         $sth = self::$dbh->prepare($sql);
-
 
 
         $sth->execute($params);

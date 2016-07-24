@@ -7,16 +7,16 @@
  */
 
 
-namespace  App\Controllers;
+namespace App\Controllers;
 
 
 use App\Components\Session;
 
-abstract class BaseController{
+abstract class BaseController
+{
 
 
-
-        protected $session;
+    protected $session;
 
 
     public function __construct()

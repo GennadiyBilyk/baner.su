@@ -9,31 +9,36 @@
 
 namespace App\Components;
 
-class Session{
+class Session
+{
 
-    public function __get($name){
+    public function __get($name)
+    {
 
-        if(isset($_SESSION[$name])){
+        if (isset($_SESSION[$name])) {
             return $_SESSION[$name];
-        }else{
+        } else {
             return NULL;
         }
     }
 
-    public function __set($name,$value){
+    public function __set($name, $value)
+    {
 
         $_SESSION[$name] = $value;
     }
 
-    public function setFlash($name,$value){
+    public function setFlash($name, $value)
+    {
 
         $this->$name = $value;
     }
 
-    public function getFlash($name){
+    public function getFlash($name)
+    {
 
-       $value = $this->$name;
-        if(isset($_SESSION[$name])){
+        $value = $this->$name;
+        if (isset($_SESSION[$name])) {
             unset($_SESSION[$name]);
         }
         return $value;
